@@ -1,19 +1,20 @@
 <?php
 /**
- * PHP file to retrieve the list of food trucks located on a partcular street
+ * PHP file to retrieve the list of food trucks by name
  *
- * PHP version 5
+ * * PHP version 5
  *
  * @author    Sydney Dsouza <dsouza.syds@gmail.com>
  * @copyright 2015 Sydney Dsouza - All rights reserved
  */
 
+//Url for column metadata
 require_once 'socrata.php';
 
-// Getting the street on which we want to get the food trucks on
-$text = $_GET["text"];
+$text = $_GET["truck_name"];
 
 // Using the sod api to get the food truck
+
 $socrata = new Socrata("https://data.sfgov.org");
 // Retrieving the filtered information list
 $params = array("\$q" => "$text","\$select" => "applicant,fooditems,locationdescription,location");
@@ -26,7 +27,6 @@ foreach ($response as $result) {
   if (isset($result['location'])) {
     $valid_result[] = $result;
   }
-
 }
 echo json_encode($valid_result)
 ?>
