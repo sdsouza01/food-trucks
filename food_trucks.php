@@ -1,168 +1,42 @@
 <?php
-
+/**
+ * Starting php page to display food trucks in San Francisco
+ *
+ * PHP version 5
+ *
+ * @author    Sydney Dsouza <dsouza.syds@gmail.com>
+ * @copyright 2015 Sydney Dsouza - All rights reserved
+ */
 ?>
 <html>
 <head>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://maps.googleapis.com/maps/api/js"></script>
-  <script src="handlebars-v2.js"></script>
-  <script src="php_test.js"></script>
-  <script src="underscore.js"></script>
-  <script src="backbone.js"></script>
-
-  <!--<script id="some-template" type="text/x-handlebars-template">
-    <select id="user-selection">
-      {{#each locations}}
-        <option value="{{location}}">{{location}}</option>
-      {{/each}}
-    </select>
-  </script>-->
-
-  <script>
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-    /*function updateResults() {
-      $.ajax({
-        type: 'GET',
-        url: 'php_test/php/php_filter_data.php',
-        dataType: 'json',
-        data: {text: $("#user-selection").val()}
-      })
-        .done(function(data){
-          var myCenter = new google.maps.LatLng(37.7833,-122.4167);
-          var mapProp = {
-            center:myCenter,
-            zoom:14,
-            mapTypeId:google.maps.MapTypeId.ROADMAP
-          };
-          var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-          $.each(data, function(key, value){
-            var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(value.location.latitude, value.location.longitude),
-              map: map,
-              title: value.applicant
-            });
-
-            google.maps.event.addListener(map, 'click', getCoOrds);
-
-            google.maps.event.addListener(marker, 'click', function() {
-              var infowindow = new google.maps.InfoWindow({
-                content: value.applicant + '<br>' + value.fooditems + '<br>' + value.locationdescription
-              });
-              infowindow.open(map,marker);
-            });
-          });
-        });
-    }*/
-
-    /*function getCoOrds (event) {
-      var lat = event.latLng.lat();
-      var lng = event.latLng.lng();
-      var myCenter = new google.maps.LatLng(lat,lng);
-      // populate yor box/field with lat, lng
-      var mapProp = {
-        center:myCenter,
-        zoom:13,
-        mapTypeId:google.maps.MapTypeId.ROADMAP
-      };
-
-      var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-      var marker = new google.maps.Marker({
-        position:myCenter,
-      });
-
-      marker.setMap(map);
-
-      var myCity = new google.maps.Circle({
-        center:myCenter,
-        radius:1609,
-        strokeColor:"#0000FF",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"#0000FF",
-        fillOpacity:0.4
-      });
-
-      myCity.setMap(map);
-      google.maps.event.addListener(map, 'click', getCoOrds);
-
-    }*/
-
-
-    function initialize() {
-      /*var myCenter = new google.maps.LatLng(37.7833,-122.4167);
-      var mapProp = {
-        center:myCenter,
-        zoom:14,
-        mapTypeId:google.maps.MapTypeId.ROADMAP
-      };
-      var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-      google.maps.event.addListener(map, 'click', getCoOrds);
-
-      var marker=new google.maps.Marker({
-        position:myCenter,
-        icon:'arrow.png'
-      });
-
-      marker.setMap(map);
-
-      var myCity = new google.maps.Circle({
-        center:myCenter,
-        radius:1609,
-        strokeColor:"#0000FF",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"#0000FF",
-        fillOpacity:0.4
-      });
-
-      myCity.setMap(map);*/
-
-      /*$.ajax({
-        type: 'GET',
-        url: 'php_test_data.php',
-        dataType: 'json'
-      })
-        .done(function(data){
-          $.each(data, function(key, value){
-            //console.log(value.applicant);
-            var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(value.location.latitude, value.location.longitude),
-              map: map,
-              title: value.applicant
-            });
-
-            google.maps.event.addListener(marker, 'click', function() {
-              var infowindow = new google.maps.InfoWindow({
-                content: value.applicant + '<br>' + value.fooditems + '<br>' + value.locationdescription
-              });
-              infowindow.open(map,marker);
-            });
-          });
-        });*/
-
-      /*$.ajax({
-        type: 'GET',
-        url: 'php_test/php/food_truck_locations.php',
-        dataType: 'json'
-      })
-        .done(function(data){
-          var source   = $("#some-template").html();
-          var template = Handlebars.compile(source);
-          console.log({'locations': data});
-          $("#user-preference").html(template({locations : data}));
-        });*/
-    }
-
-  </script>
+  <script src="library/handlebars-v2.js"></script>
+  <script src="javascript/food_trucks.js"></script>
+  <script src="library/underscore.js"></script>
+  <script src="library/backbone.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="css/food_trucks.css" type="text/css">
 </head>
-<body>
+<body bgcolor="#E6E6FA">
+<div id="tabs">
+  <ul id="nav" class="fixed-nav-bar">
+    <li id="nav-home"><a href="#" id="nav-home-link">Home</a></li>
+    <li id="nav-about"><a href="#about">About</a></li>
+    <li id="nav-contact"><a href="#contact">Contact Us</a></li>
+    <img src="images/trucks.png" class="header-img"/>
+  </ul>
+</div>
+<div class="header">
+  <span>Where's your food truck?</span>
+</div>
+<br/>
 <div id="food-trucks">
-  <div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Filter your results</div>
     <span>Select distance in miles:</span>
-    <span>
+    <span class="custom-select">
       <select id="user-distance">
         <option>1</option>
         <option>1.5</option>
@@ -176,37 +50,54 @@
       </select>
     </span>
     <span>Select Location:</span>
-    <span id="user-preference">
+    <span id="user-preference" class="custom-select">
       <select style="width:205px;"></select>
     </span>
     <span>Whats on your mind?:</span>
-      <select>
+    <span class="custom-select">
+      <select id="user-food-type">
         <option>Select food type</option>
-        <option>Breakfast</option>
-        <option>Burgers</option>
-        <option>Chinese</option>
-        <option>Dessert</option>
-        <option>Filipino</option>
-        <option>Hot/Chili Dogs</option>
-        <option>Indian</option>
-        <option>Korean</option>
-        <option>Mexican</option>
-        <option>Middle Eastern</option>
-        <option>Organic</option>
-        <option>Peruvian</option>
-        <option>Pizza</option>
-        <option>Sandwiches</option>
-        <option>Sea Food</option>
-        <option>Soups</option>
-        <option>Sushi</option>
-        <option>Vietnamese</option>
+        <option value="breakfast">Breakfast</option>
+        <option value="burgers">Burgers</option>
+        <option value="chinese">Chinese</option>
+        <option value="dessert">Dessert</option>
+        <option value="filipino">Filipino</option>
+        <option value="dog">Hot/Chili Dogs</option>
+        <option value="indian">Indian</option>
+        <option value="korean">Korean</option>
+        <option value="mexican">Mexican</option>
+        <option value="middle-eastern">Middle Eastern</option>
+        <option value="organic">Organic</option>
+        <option value="peruvian">Peruvian</option>
+        <option value="pizza">Pizza</option>
+        <option value="sandwich">Sandwiches</option>
+        <option value="sea-food">Sea Food</option>
+        <option value="soups">Soups</option>
+        <option value="sushi">Sushi</option>
+        <option value="vietnamese">Vietnamese</option>
       </select>
     </span>
     <span>Search for food truck by Name:</span>
     <span><input type="text" id="search-by-name"/></span>
   </div>
-  <br/>
-  <div id="googleMap" style="width:900px;height:480px;"></div>
+  <div>Displaying results for: <span id="filtered-results"></span></div>
+  <div id="googleMap" style="width:100%;height:70%;"></div>
   </div>
+<br>
+<br>
+<div id="about">
+  <div class="panel panel-primary">
+    <div class="panel-heading">About Me</div>
+    <div>Sydney Dsouza</div>
+  </div>
+</div>
+<br>
+<br>
+<div id="contact">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Contact Me</div>
+    <div>If you have any question, comments or concerns you can contact me via email at dsouza.syds@gmail.com</div>
+  </div>
+</div>
 </body>
 </html>
