@@ -1,0 +1,202 @@
+/* Autocomplete lis css*/
+.ui-autocomplete
+{
+    float : left;
+    clear : both; /* make sure it doesn't pull the next line up next to it */
+    position : relative;  /* z-index will not work without this */
+    z-index : 50;
+    list-style : none;
+    background-color: #FFFFFF;
+    border: solid 1px #ADD8E6;
+    text-align : left;
+    overflow-y : scroll;
+    max-height : 100px;
+    margin : 0px; /* pull the list items over the left edge */
+    padding : 0px;
+}
+
+.header
+{
+    font-weight: bold;
+    font-size: 34px;
+    padding-top: 100px;
+}
+
+.header-img
+{
+    height : 75px;
+    float: right;
+}
+
+html,body
+{
+    font-family: 'helvetica neue';
+}
+
+.custom-select 
+{
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select select 
+{
+    display: inline-block;
+    border: 2px solid #bbb;
+    padding: 4px 3px 3px 5px;
+    margin: 0;
+    font: inherit;
+    outline:none; /* remove focus ring from Webkit */
+    line-height: 1.2;
+    background: #F8F8F8;
+
+    -webkit-appearance:none; /* remove the strong OSX influence from Webkit */
+
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+/* for Webkit's CSS-only solution */
+@media screen and (-webkit-min-device-pixel-ratio:0) 
+{
+    .custom-select select {
+        padding-right:30px;
+    }
+}
+
+/* Since we removed the default focus styles, we have to add our own */
+.custom-select select:focus 
+{
+    -webkit-box-shadow: 0 0 3px 1px #C00;
+    -moz-box-shadow: 0 0 3px 1px #C00;
+    box-shadow: 0 0 3px 1px #C00;
+}
+
+/* Select arrow styling */
+.custom-select:after 
+{
+    content: '▼';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 60%;
+    line-height: 30px;
+    padding: 0 7px;
+    background: #BBB;
+    color: #FFFFFF;
+
+    pointer-events:none;
+
+    -webkit-border-radius: 0 6px 6px 0;
+    -moz-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
+}
+
+.no-pointer-events .custom-select:after 
+{
+    content: none;
+}
+
+#nav 
+{
+    margin:0;
+    padding:0;
+    background:#0B2161 0 0 repeat-x;
+    width:100%;
+    float:left;
+    border:1px solid #42432D;
+    border-width:1px 0;
+    font-family: "helvetica neue";
+}
+#nav li 
+{
+    display:inline;
+    padding:0;
+    margin:0;
+}
+#nav a:link,
+#nav a:visited 
+{
+    color:#000;
+    background:#2E64FE;
+    padding:20px 40px 4px 10px;
+    float:left;
+    width:auto;
+    height : 50px;
+    border-right:1px solid #42432D;
+    text-decoration:none;
+    font:bold 1em/1em Arial, Helvetica, sans-serif;
+    text-transform:uppercase;
+    text-shadow: 2px 2px 2px #555;
+}
+#nav a:hover
+{
+    color:#FFF;
+    background:#A4A4A4;
+}
+#nav li:first-child a 
+{
+    border-left:1px solid #42432D;
+}
+#home #nav-home a,
+#about #nav-about a,
+#contact #nav-contact a 
+{
+    background:#E35A00;
+    color:#FFF;
+    text-shadow:none;
+}
+#home #nav-home a:hover,
+#about #nav-about a:hover,
+#contact #nav-contact a:hover 
+{
+    background:#E35A00;
+}
+#nav a:active 
+{
+    background:#E35A00;
+    color:#fff;
+}
+
+.fixed-nav-bar 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    /*height: 50px;*/
+    background-color: #00A087;
+}
+
+.panel-primary 
+{
+    border-color: #6F538C;
+}
+
+.panel 
+{
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+    border: 3px solid #6F538C;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.panel-heading 
+{
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.panel-primary>.panel-heading 
+{
+    color: #FFFFFF;
+    background-color: #6F538C;
+    border-color: #6F538C;
+}
