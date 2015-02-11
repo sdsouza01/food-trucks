@@ -11,8 +11,10 @@
 <html>
 <head>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="http://maps.googleapis.com/maps/api/js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script src="library/handlebars-v2.js"></script>
+  <script src="javascript/food_trucks_collection.js"></script>
+  <script src="javascript/food_trucks_model.js"></script>
   <script src="javascript/food_trucks.js"></script>
   <script src="library/underscore.js"></script>
   <script src="library/backbone.js"></script>
@@ -56,7 +58,7 @@
     <span>Whats on your mind?:</span>
     <span class="custom-select">
       <select id="user-food-type">
-        <option>Select food type</option>
+        <option value="0">Select food type</option>
         <option value="breakfast">Breakfast</option>
         <option value="burgers">Burgers</option>
         <option value="chinese">Chinese</option>
@@ -81,6 +83,7 @@
     <span><input type="text" id="search-by-name"/></span>
   </div>
   <div>Displaying results for: <span id="filtered-results"></span></div>
+  <div>Use your current location<input type="checkbox" id="use-your-location"/></div>
   <div id="googleMap" style="width:100%;height:70%;"></div>
   </div>
 <br>
