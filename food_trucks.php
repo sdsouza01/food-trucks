@@ -15,7 +15,7 @@
   <script src="library/handlebars-v2.js"></script>
   <script src="javascript/food_trucks_collection.js"></script>
   <script src="javascript/food_trucks_model.js"></script>
-  <script src="javascript/food_trucks.js"></script>
+  <script src="javascript/food_trucks_view.js"></script>
   <script src="library/underscore.js"></script>
   <script src="library/backbone.js"></script>
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
