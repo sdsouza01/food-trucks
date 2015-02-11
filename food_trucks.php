@@ -26,7 +26,7 @@
   <ul id="nav" class="fixed-nav-bar">
     <li id="nav-home"><a href="#" id="nav-home-link">Home</a></li>
     <li id="nav-about"><a href="#about">About</a></li>
-    <li id="nav-contact"><a href="#contact">Contact Us</a></li>
+    <li id="nav-contact"><a href="#contact">Contact Me</a></li>
     <img src="images/trucks.png" class="header-img"/>
   </ul>
 </div>
@@ -84,14 +84,16 @@
   </div>
   <div>Displaying results for: <span id="filtered-results"></span></div>
   <div>Use your current location<input type="checkbox" id="use-your-location"/></div>
+  <div id="spinner" class="loading-bg hidden"></div>
   <div id="googleMap" style="width:100%;height:70%;"></div>
   </div>
 <br>
 <br>
 <div id="about">
   <div class="panel panel-primary">
-    <div class="panel-heading">About Me</div>
-    <div>Sydney Dsouza</div>
+    <div class="panel-heading">About</div>
+    <div>This a project that I have worked on because I love eating at food trucks and always want to know where my favourite trucks are located. 
+      This site is helpful for people who share a similar love for eating at food trucks</div>
   </div>
 </div>
 <br>
