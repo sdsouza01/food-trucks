@@ -417,7 +417,7 @@ $( document ).ready(function() {
       
       self.clearAllMarkers();        
       self.model.setMarkers([]);
-      
+      console.log(self.model.toJSON());
       
       if ($('#user-distance').val() !== '1') {
         console.log('In here');
@@ -426,7 +426,7 @@ $( document ).ready(function() {
           circle.setMap(null);
         }
         self.model.resetCircle();
-        
+        console.log(self.model.getMyLocation());
         var myCity = new google.maps.Circle({
           center: self.model.getMyLocation(),
           radius: parseFloat($('#user-distance').val()) * 1609,
@@ -439,6 +439,7 @@ $( document ).ready(function() {
         self.model.setCircle(myCity);
         myCity.setMap(self.model.get('map'));
       }
+      console.log(self.model.toJSON());
       
       _.each(this.collection.nearByTrucks.toJSON(), function(value){
 
@@ -470,7 +471,6 @@ $( document ).ready(function() {
       self.model.setNewLocation(lat, lng);
       
       var circle = self.model.get('circle');
-      console.log(circle);
       if (circle) {
         circle.setMap(null);
       }
@@ -482,7 +482,6 @@ $( document ).ready(function() {
         center.setMap(null);
       }
       self.model.resetCenter();
-      
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
         icon:'images/arrow.png'
@@ -492,7 +491,7 @@ $( document ).ready(function() {
 
       var myCity = new google.maps.Circle({
         center: new google.maps.LatLng(lat, lng),
-        radius:1609,
+        radius: parseFloat($('#user-distance').val()) * 1609,
         strokeColor:"#0000FF",
         strokeOpacity:0.8,
         strokeWeight:2,
@@ -501,10 +500,10 @@ $( document ).ready(function() {
       });
       self.model.setCircle(myCity);
       myCity.setMap(self.model.get('map'));
-      google.maps.event.addListener(self.model.get('map'), 'click', this.getCoOrds);
+     // google.maps.event.addListener(self.model.get('map'), 'click', this.getCoOrds);
       
-      $('#user-distance').val('1');
-      self.collection.getNearByTrucks('1', lat, lng);
+      //$('#user-distance').val('1');
+      self.collection.getNearByTrucks($('#user-distance').val(), lat, lng);
     }
   })
 

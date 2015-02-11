@@ -14,12 +14,14 @@ $( document ).ready(function() {
       var myCenter = new google.maps.LatLng(lat,lng);
       // populate yor box/field with lat, lng
       var mapValue = self.get('map');
-      var map = new window.app.foodTruckMap({
+      /*var map = new window.app.foodTruckMap({
         latitude: lat,
         longitude: lng,
         map: mapValue
-      });
-      self.set(map);
+      */
+      //self.set(map);
+      self.set({'latitude': lat});
+      self.set({'longitude': lng});
     },
     
     getMyLocation: function() {
