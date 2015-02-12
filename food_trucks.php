@@ -10,36 +10,36 @@
 ?>
 <html>
 <head>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js"></script>
-  <script src="library/handlebars-v2.js"></script>
-  <script src="javascript/food_trucks_collection.js"></script>
-  <script src="javascript/food_trucks_model.js"></script>
-  <script src="javascript/food_trucks_view.js"></script>
-  <script src="library/underscore.js"></script>
-  <script src="library/backbone.js"></script>
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  <link rel="stylesheet" href="css/food_trucks.css" type="text/css">
+  <script src = '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+  <script src = 'https://maps.googleapis.com/maps/api/js'></script>
+  <script src = 'library/handlebars-v2.js'></script>
+  <script src = 'javascript/food_trucks_collection.js'></script>
+  <script src = 'javascript/food_trucks_model.js'></script>
+  <script src = 'javascript/food_trucks_view.js'></script>
+  <script src = 'library/underscore.js'></script>
+  <script src = 'library/backbone.js'></script>
+  <script src = '//code.jquery.com/ui/1.11.2/jquery-ui.js'></script>
+  <link rel = 'stylesheet' href = 'css/food_trucks.css' type = 'text/css'>
 </head>
-<body bgcolor="#E6E6FA">
-<div id="tabs">
-  <ul id="nav" class="fixed-nav-bar">
-    <li id="nav-home"><a href="#" id="nav-home-link">Home</a></li>
-    <li id="nav-about"><a href="#about">About</a></li>
-    <li id="nav-contact"><a href="#contact">Contact Me</a></li>
-    <img src="images/trucks.png" class="header-img"/>
+<body bgcolor = '#E6E6FA'>
+<div id = 'tabs'>
+  <ul id = 'nav' class = 'fixed-nav-bar'>
+    <li id = 'nav-hom'><a href = '#' id = 'nav-home-link'>Home</a></li>
+    <li id = 'nav-about'><a href = '#about'>About</a></li>
+    <li id = 'nav-contact'><a href = '#contact'>Contact Me</a></li>
+    <img src = 'images/trucks.png' class = 'header-img'/>
   </ul>
 </div>
-<div class="header">
+<div class = 'header'>
   <span>Where's your food truck?</span>
 </div>
 <br/>
-<div id="food-trucks">
-  <div class="panel panel-primary">
-    <div class="panel-heading">Filter your results</div>
+<div id = 'food-trucks'>
+  <div class = 'panel panel-primary'>
+    <div class = 'panel-heading'>Filter your results</div>
     <span>Select distance in miles:</span>
-    <span class="custom-select">
-      <select id="user-distance">
+    <span class = 'custom-select'>
+      <select id = 'user-distance'>
         <option>1</option>
         <option>1.5</option>
         <option>2</option>
@@ -52,56 +52,56 @@
       </select>
     </span>
     <span>Select Location:</span>
-    <span id="user-preference" class="custom-select">
-      <select style="width:205px;"></select>
+    <span id = 'user-preference' class = 'custom-select'>
+      <select class = 'drop-down'></select>
     </span>
     <span>Whats on your mind?:</span>
-    <span class="custom-select">
-      <select id="user-food-type">
-        <option value="0">Select food type</option>
-        <option value="breakfast">Breakfast</option>
-        <option value="burgers">Burgers</option>
-        <option value="chinese">Chinese</option>
-        <option value="dessert">Dessert</option>
-        <option value="filipino">Filipino</option>
-        <option value="dog">Hot/Chili Dogs</option>
-        <option value="indian">Indian</option>
-        <option value="korean">Korean</option>
-        <option value="mexican">Mexican</option>
-        <option value="middle-eastern">Middle Eastern</option>
-        <option value="organic">Organic</option>
-        <option value="peruvian">Peruvian</option>
-        <option value="pizza">Pizza</option>
-        <option value="sandwich">Sandwiches</option>
-        <option value="sea-food">Sea Food</option>
-        <option value="soups">Soups</option>
-        <option value="sushi">Sushi</option>
-        <option value="vietnamese">Vietnamese</option>
+    <span class = 'custom-select'>
+      <select id = 'user-food-type'>
+        <option value = '0'>Select food type</option>
+        <option value = 'breakfast'>Breakfast</option>
+        <option value = 'burgers'>Burgers</option>
+        <option value = 'chinese'>Chinese</option>
+        <option value = 'dessert'>Dessert</option>
+        <option value = 'filipino'>Filipino</option>
+        <option value = 'dog'>Hot/Chili Dogs</option>
+        <option value = 'indian'>Indian</option>
+        <option value = 'korean'>Korean</option>
+        <option value = 'mexican'>Mexican</option>
+        <option value = 'middle-eastern'>Middle Eastern</option>
+        <option value = 'organic'>Organic</option>
+        <option value = 'peruvian'>Peruvian</option>
+        <option value = 'pizza'>Pizza</option>
+        <option value = 'sandwich'>Sandwiches</option>
+        <option value = 'sea-food'>Sea Food</option>
+        <option value = 'soups'>Soups</option>
+        <option value = 'sushi'>Sushi</option>
+        <option value = 'vietnamese'>Vietnamese</option>
       </select>
     </span>
     <span>Search for food truck by Name:</span>
-    <span><input type="text" id="search-by-name"/></span>
+    <span><input type = 'text' id = 'search-by-name'/></span>
   </div>
-  <div>Displaying results for: <span id="filtered-results"></span></div>
-  <div>Use your current location<input type="checkbox" id="use-your-location"/> (Use only if in San Francisco)</div>
-  <div id="spinner" class="loading-bg hidden"></div>
-  <div id="googleMap" style="width:100%;height:70%;"></div>
+  <div>Displaying results for: <span id = 'filtered-results'></span></div>
+  <div>Use your current location<input type = 'checkbox' id = 'use-your-location'/> (Use only if in San Francisco)</div>
+  <div id = 'spinner' class = 'loading-bg hidden'></div>
+  <div id = 'googleMap' class = 'google-map'></div>
   </div>
 <br>
 <br>
-<div id="about">
-  <div class="panel panel-primary">
-    <div class="panel-heading">About</div>
-    <div>This a project that I have worked on because I love eating at food trucks and always want to know where my favourite trucks are located. 
+<div id = 'about'>
+  <div class = 'panel panel-primary'>
+    <div class = 'panel-heading'>About</div>
+    <div>This a project that I have worked on because I love eating at food trucks and always want to know where my favourite trucks are located.<br>
       This site is helpful for people who share a similar love for eating at food trucks</div>
   </div>
 </div>
 <br>
 <br>
-<div id="contact">
-  <div class="panel panel-primary">
-    <div class="panel-heading">Contact Me</div>
-    <div>If you have any question, comments or concerns you can contact me via email at dsouza.syds@gmail.com</div>
+<div id = 'contact'>
+  <div class = 'panel panel-primary'>
+    <div class = 'panel-heading'>Contact Me</div>
+    <div>If you have any question, comments or concerns you can contact me via email at <a href="mailto:dsouza.syds@gmail.com" target="_top">dsouza.syds@gmail.com</a></div>
   </div>
 </div>
 </body>

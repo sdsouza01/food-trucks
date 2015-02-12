@@ -15,6 +15,17 @@
     padding : 0px;
 }
 
+.drop-down
+{
+   width:205px; 
+}
+
+.google-map
+{
+    width:100%;
+  height:70%;
+}
+
 .loading-bg 
 {
     padding: 25px;
