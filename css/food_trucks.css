@@ -51,7 +51,7 @@ html,body
 .loading-bg 
 {
     padding: 25px;
-    background: url('/food-trucks/images/ajax-loader.gif') no-repeat center;
+    background: url('/images/ajax-loader.gif') no-repeat center;
     background-size: 120px 20px;
 }
 
