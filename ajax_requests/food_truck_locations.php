@@ -17,6 +17,8 @@ $params = array("\$group" => "locationdescription","\$select" => "locationdescri
 $response = $socrata->get("/resource/rqzj-sfat.json", $params);
 
 // Looping through and checking if the street is already in he list of streets and ignore if it does.
+// The reason I am using 2 array is because 1 will be a 1 dimensional array of the locations against which new location will be checked to remove duplicates
+// The second array is store the data with an index array['location' => $location] 
 $locations = [];
 $location_one_dim_array = [];
 foreach ($response as $location) {
@@ -34,5 +36,7 @@ foreach ($response as $location) {
     }
   }
 }
+
+//Returning the result in json format
 echo json_encode($locations);
 ?>

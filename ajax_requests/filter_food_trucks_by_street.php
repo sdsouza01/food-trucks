@@ -28,5 +28,7 @@ foreach ($response as $result) {
   }
 
 }
+
+// Returning the result in json format
 echo json_encode($valid_result)
 ?>

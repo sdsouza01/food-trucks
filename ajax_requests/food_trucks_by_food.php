@@ -16,6 +16,7 @@ $text = $_GET["food_type"];
 // Using the soda api to get the food truck
 $socrata = new Socrata("https://data.sfgov.org");
 $response = [];
+// Since some of the food types could have one more delicacies I am searching my all of them
 switch($text) {
   case 'burgers ':
     $params = array("\$q" => "burgers","\$select" => "applicant,fooditems,locationdescription,location");

@@ -17,6 +17,6 @@ $text = $_GET["text"];
 $socrata = new Socrata("https://data.sfgov.org");
 $params = array("\$q" => "$text", "\$select" => "applicant");
 $response = $socrata->get("/resource/rqzj-sfat.json", $params);
-
+// Returning the response in json format
 echo json_encode($response)
 ?>
