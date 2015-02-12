@@ -14,7 +14,11 @@ $( document ).ready(function() {
     // Collection to hold the list of food trucks on the selected street
     streetTrucks: new Backbone.Collection(),
     
+    // Collection to hold the list of food trucks based on the selected food type
     trucksByFood: new Backbone.Collection(),
+    
+    // Collection to hold the list of food trucks names based on the letters the user typed
+    trucksForAutoComplete: new Backbone.Collection(),
 
     initialize: function() {
       console.log('Collection Initialized');
@@ -93,12 +97,20 @@ $( document ).ready(function() {
     },
     
     getListOfFoodTruckNamesForAutocomplete: function() {
-      $.ajax({
+      var self = this;
+      var results = $.ajax({
         type: 'GET',
         url: 'ajax_requests/food_truck_name_autocomplete.php',
         data: {'text': $('#search-by-name').val()},
         datatype: 'json'
       }).done(function(data) {
+        self.trucksForAutoComplete.reset(data);
+        self.trigger('displayAutoComplete');
+        //return self.trucksForAutoComplete;
+      });
+      
+      $.when(results).done(function(){
+        return;
       });
     },
     

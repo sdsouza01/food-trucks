@@ -83,7 +83,7 @@
     <span><input type="text" id="search-by-name"/></span>
   </div>
   <div>Displaying results for: <span id="filtered-results"></span></div>
-  <div>Use your current location<input type="checkbox" id="use-your-location"/></div>
+  <div>Use your current location<input type="checkbox" id="use-your-location"/> (Use only if in San Francisco)</div>
   <div id="spinner" class="loading-bg hidden"></div>
   <div id="googleMap" style="width:100%;height:70%;"></div>
   </div>

@@ -1,173 +1,18 @@
 $( document ).ready(function() {
+  // Creating the application namespace
+  window.app = window.app || {};
+  
   /**
    * Handlebar template to display dropdown of streets which have food trucks
    *
    * @type {string}
-   */
-  window.app = window.app || { };
-  
+   */  
   var streetList = '<select id="user-selection"> \
                     <option value="0">Select a street</option> \
                     {{#each locations}} \
                       <option value="{{location}}">{{location}}</option> \
                     {{/each}} \
                     </select>';
-
-  /*var foodTruckCollection = Backbone.Collection.extend({
-
-    // Collection to hold the list of near by food trucks
-    nearByTrucks: new Backbone.Collection(),
-
-    // Collection to hold the list of street names
-    streetsList: new Backbone.Collection(),
-
-    // Collection to hold the list of food trucks on the selected street
-    streetTrucks: new Backbone.Collection(),
-
-    initialize: function() {
-      console.log('Collection Initialized');
-    },*/
-
-    /**
-     * Function to make an ajax call to get food trucks close to users location
-     */
-    /*getNearByTrucks: function(val, lat, lng) {
-      var self = this;      
-      $.ajax({
-        type: 'GET',
-        url: 'ajax_requests/near_by_food_trucks.php',
-        dataType: 'json',
-        data: {
-          'radius': val,
-          'lat' : lat,
-          'lng' : lng
-        }
-      })
-        .done(function(data){
-          self.nearByTrucks.reset(data);
-          //self.set('near_by_trucks', data);
-          self.trigger('loadedNearByFoodTrucks');
-        });
-    },*/
-
-    /**
-     * Function to get the list of streets that have food trucks
-     */
-    /*getFoodTrucksOnStreet: function() {
-      var self = this;
-      $.ajax({
-        type: 'GET',
-        url: 'ajax_requests/food_truck_locations.php',
-        dataType: 'json'
-      })
-        .done(function(data){
-          self.streetsList.reset(data);
-          self.trigger('loadedStreets');
-        });
-    },*/
-
-    /**
-     * Function to get food trucks on a particular street
-     */
-   /* updateResults: function() {
-      var self = this;
-      $.ajax({
-        type: 'GET',
-        url: 'ajax_requests/filter_food_trucks_by_street.php',
-        dataType: 'json',
-        data: {text: $("#user-selection").val()}
-      })
-      .done(function(data){
-        self.streetTrucks.reset(data);
-        self.trigger('updatedResults');
-      });
-    },*/
-    
-    /**
-     * Function to make the ajax call to get the list of food trucks based on the users food type selection
-     */
-    /*getFoodTrucksByStreet: function() {
-      $.ajax({
-        type: 'GET',
-        datatype: 'json',
-        url: 'ajax_requests/food_trucks_by_food.php',
-        data: {'food_type' : $('#user-food-type').val()}
-      })
-      .done(function(data) {
-      });
-    },
-    
-    getListOfFoodTruckNamesForAutocomplete: function() {
-      $.ajax({
-        type: 'GET',
-        url: 'ajax_requests/food_truck_name_autocomplete.php',
-        data: {'text': $('#search-by-name').val()},
-        datatype: 'json'
-      }).done(function(data) {
-      });
-    },
-    
-    getListOfFoodTrucksByName: function() {
-      $.ajax({
-        type: 'GET',
-        url: 'ajax_requests/get_food_truck_by_name.php?truck_name=' + values,
-        datatype: 'json',
-        data: {'truck_name': values}
-      }).done(function(data) {
-      });
-    }
-    
-  })*/
-
-  ///var foodTruckMap = Backbone.Model.extend({
-    /**
-     * Function to change the latitude and longitude of the model
-     *
-     * @param int lat Latitude of the new location
-     * @param int lng Longitude of the new location
-     */
-   /* setNewLocation: function(lat, lng) {
-      var self = this;
-      var myCenter = new google.maps.LatLng(lat,lng);
-      // populate yor box/field with lat, lng
-      var mapValue = self.get('map');
-      var map = new foodTruckMap({
-        latitude: lat,
-        longitude: lng,
-        map: mapValue
-      });
-      self.set(map);
-    },
-    
-    getMyLocation: function() {
-      var self = this;
-      return new google.maps.LatLng(self.get('latitude'), self.get('longitude')); 
-    },
-    
-    resetModel: function(data) {
-      this.set(data);
-    },
-    
-    setMarkers: function(newMarkers) {
-      this.set({markers: newMarkers});
-    },
-    
-    resetCircle: function() {
-      this.set({circle: null});
-    },
-    
-    setCircle: function(newCircle) {
-      this.set({circle: newCircle});
-    },
-    
-    resetCenter: function() {
-      this.set({center: null});
-    },
-    
-    setCenter: function(newCircle) {
-      this.set({center: newCircle});
-    }
-  });*/
 
   var foodTruckView = Backbone.View.extend({
     el :  '#food-trucks',
@@ -176,14 +21,21 @@ $( document ).ready(function() {
 
     model: new window.app.foodTruckMap(),
     
+    /**
+     * Function to bind all listeners to events from the collection
+     */
     bindListeners: function() {
       this.listenTo(this.collection, 'loadedNearByFoodTrucks', this.displayNearByFoodTrucks);
       this.listenTo(this.collection, 'loadedStreets', this.displayStreetsList);
       this.listenTo(this.collection, 'updatedResults', this.displayUpdatedResults);
       this.listenTo(this.collection, 'loadedFoodTrucksByType', this.displayTrucksByFood);
+      //this.listenTo(this.collection, 'displayAutoComplete', this.displayAutoComplete)
       google.maps.event.addListener(this.model.get('map'), 'click', this.getCoOrds);
     },
 
+    /**
+     * List of events from UI that needs to be handled
+     */
     events: {
       'change #user-selection' : 'updateResults',
       'keyup #search-by-name' : 'autocomplete',
@@ -193,7 +45,7 @@ $( document ).ready(function() {
     },
 
     /**
-     *
+     * Initialization to the view that need to be made when the page starts up
      */
     initialize : function () {
       console.log('View Initialized');
@@ -206,8 +58,8 @@ $( document ).ready(function() {
       });
       self.model.setCenter(marker)
       marker.setMap(self.model.get('map'));
-
-      var myCity = new google.maps.Circle({
+      self.setMapCircle(self.model.get('latitude'), self.model.get('longitude'));
+      /*var myCity = new google.maps.Circle({
           center: self.model.getMyLocation(),
           radius: 1609,
           strokeColor: "#0000FF",
@@ -217,7 +69,7 @@ $( document ).ready(function() {
           fillOpacity: 0.4
         });
       self.model.setCircle(myCity);
-      myCity.setMap(self.model.get('map'));
+      myCity.setMap(self.model.get('map'));*/
       
       self.collection.getNearByTrucks('1', self.model.get('latitude'), self.model.get('longitude'));
       self.collection.getFoodTrucksOnStreet();
@@ -241,21 +93,54 @@ $( document ).ready(function() {
     },
     
     useYourLocation: function() {
-      var self = this;
+      var self = this, lat, lng;
       if ($('#use-your-location').prop('checked')) {
         // Try HTML5 geolocation
         if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-          var pos = new google.maps.LatLng(position.coords.latitude,
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+            //lat = 37.78808138412046;
+            //lng = -122.45455741882324;
+            self.model.setNewLocation(lat, lng);
+            
+            // Remove olds markers
+            self.clearAllMarkers();        
+            self.model.setMarkers([]);
+            
+            var circle = self.model.get('circle');
+            if (circle) {
+              circle.setMap(null);
+            }
+            self.model.resetCircle();
+            
+            var center = self.model.get('center');
+            if (center) {
+              console.log('remove center');
+              center.setMap(null);
+            }
+            self.model.resetCenter();
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(lat, lng),
+              icon:'images/arrow.png'
+            });
+            self.model.setCenter(marker);
+            marker.setMap(self.model.get('map'));
+      
+            self.setMapCircle(lat, lng);
+            self.collection.getNearByTrucks($('#user-distance').val(), lat, lng);
+            ///////
+            
+            /*var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
 
-          var infowindow = new google.maps.InfoWindow({
-          map: self.model.get('map'),
-            position: pos,
-            content: 'Location found using HTML5.'
-          });
+            var infowindow = new google.maps.InfoWindow({
+            map: self.model.get('map'),
+              position: pos,
+              content: 'Location found using HTML5.'
+            });
 
-          self.model.get('map').setCenter(pos);
+          self.model.get('map').setCenter(pos);*/
           }, function() {
             console.log('Able to use users location');
           });
@@ -263,14 +148,18 @@ $( document ).ready(function() {
           console.log('Unable to use users location');
         }
       }
+      
+      // updating the map
     },
 
-    userDistanceUpdate: function(){
+    userDistanceUpdate: function() {
+      $('#spinner').removeClass('hidden');
       var self = this;
       this.collection.getNearByTrucks($('#user-distance').val(), self.model.get('latitude'), self.model.get('longitude'));
     },
 
-    filterTrucksByFood: function(){
+    filterTrucksByFood: function() {
+      $('#spinner').removeClass('hidden');
       this.collection.getFoodTrucksByFood();
     },
     
@@ -278,30 +167,11 @@ $( document ).ready(function() {
       var self = this;
       self.clearAllMarkers();        
       self.model.setMarkers([]);
-
-      var markers = [];
-      console.log(self.collection.trucksByFood.toJSON());
-      _.each(self.collection.trucksByFood.toJSON(), function(value){
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(value.location.latitude, value.location.longitude),
-          //map: map,
-          title: value.applicant,
-          icon:'images/foodtruck.png'
-        });
-          
-        markers.push(marker);
-
-        google.maps.event.addListener(marker, 'click', function() {
-          var infowindow = new google.maps.InfoWindow({
-            content: value.applicant + '<br>' + value.fooditems + '<br>' + value.locationdescription
-          }).open(self.model.get('map'), marker);
-        });
-      });
-      self.model.setMarkers(markers);
-      self.setAllMap();
+      self.markTrucksOnMap(self.collection.trucksByFood.toJSON());
       var text = 'Food trucks where you get ' + $('#user-food-type').val() + ' food';
       $('#user-food-type').val("0");
       $('#filtered-results').text(text);
+      $('#spinner').addClass('hidden');
     },
     
     autocomplete: function() {
@@ -316,17 +186,13 @@ $( document ).ready(function() {
               datatype: 'json'
             }).done(function(data) {
               var parsed = JSON.parse(data);
-              var newArray = new Array(parsed.length);
-              var i = 0;
-
-              parsed.forEach(function (entry) {
+              var newArray = [];
+              _.each(parsed, function(value, key) {
                 var newObject = {
-                  label: entry.applicant
+                  label: value.applicant
                 };
-                newArray[i] = newObject;
-                i++;
+                newArray[key] = newObject;
               });
-
               response(newArray);
             });
           },
@@ -341,28 +207,12 @@ $( document ).ready(function() {
               data: {'truck_name': values}
             })
               .done(function (data) {
+                $('#spinner').removeClass('hidden');
                 self.clearAllMarkers();        
                 self.model.setMarkers([]);
                 $('#search-by-name').val("");
-
-                var markers = [];
-                _.each($.parseJSON(data), function(value){
-                  var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(value.location.latitude, value.location.longitude),
-                    map: self.model.get('map'),
-                    title: value.applicant,
-                    icon:'images/foodtruck.png'
-                  });
-
-                  google.maps.event.addListener(marker, 'click', function() {
-                    var infowindow = new google.maps.InfoWindow({
-                      content: value.applicant + '<br>' + value.fooditems + '<br>' + value.locationdescription
-                    }).open(self.model.get('map'),marker);
-                  });
-                  markers.push(marker);
-                });
-                self.model.setMarkers(markers);
-                self.setAllMap();
+                self.markTrucksOnMap($.parseJSON(data));
+                $('#spinner').addClass('hidden');
               });
             var text = 'Location where ' + values + ' are located';
             $('#filtered-results').text(text);
@@ -370,8 +220,24 @@ $( document ).ready(function() {
         });
       }
     },
+    
+    displayAutoComplete: function() {
+      var self = this;
+      //var parsed = JSON.parse(self);
+      var newArray = new Array(self.collection.streetTrucks.toJSON().length);
+      var i = 0;
+      self.collection.streetTrucks.toJSON().forEach(function (entry) {
+        var newObject = {
+          label: entry.applicant
+        };
+        newArray[i] = newObject;
+        i++;
+      });
+      response(newArray);
+    },
 
     updateResults: function() {
+      $('#spinner').removeClass('hidden');
       this.collection.updateResults();
     },
 
@@ -379,45 +245,24 @@ $( document ).ready(function() {
       var self = this;      
       self.clearAllMarkers();        
       self.model.setMarkers([]);
-      
-      var markers = [];
-       _.each(self.collection.streetTrucks.toJSON(), function(value){
-         var marker = new google.maps.Marker({
-           position: new google.maps.LatLng(value.location.latitude, value.location.longitude),
-           title: value.applicant,
-           icon:'images/foodtruck.png'
-         });
-
-         google.maps.event.addListener(marker, 'click', function() {
-           var infowindow = new google.maps.InfoWindow({
-             content: value.applicant + '<br>' + value.fooditems + '<br>' + value.locationdescription
-           });
-           infowindow.open(self.model.get('map'),marker);
-         });
-         markers.push(marker);
-       });
-      self.model.setMarkers(markers);
-      self.setAllMap();
+      self.markTrucksOnMap(self.collection.streetTrucks.toJSON());
       
       var text = 'Food trucks on ' + $('#user-selection').val() + ' street';
       $('#user-selection').val("0");
       $('#filtered-results').text(text);
+      $('#spinner').addClass('hidden');
     },
 
     displayStreetsList: function() {
       var self = this;
-      //var source   = $("#some-template").html();
       var template = Handlebars.compile(streetList);
       $("#user-preference").html(template({locations : self.collection.streetsList.toJSON()}));
     },
 
     displayNearByFoodTrucks: function() {
       var self = this;
-      var markers = [];
-      
       self.clearAllMarkers();        
       self.model.setMarkers([]);
-      console.log(self.model.toJSON());
       
       if ($('#user-distance').val() !== '1') {
         console.log('In here');
@@ -426,8 +271,9 @@ $( document ).ready(function() {
           circle.setMap(null);
         }
         self.model.resetCircle();
-        console.log(self.model.getMyLocation());
-        var myCity = new google.maps.Circle({
+        console.log('to be called');
+        self.setMapCircle(self.model.get('latitude'), self.model.get('longitude'));
+        /*var city = new google.maps.Circle({
           center: self.model.getMyLocation(),
           radius: parseFloat($('#user-distance').val()) * 1609,
           strokeColor:"#0000FF",
@@ -437,30 +283,12 @@ $( document ).ready(function() {
           fillOpacity:0.4
         });
         self.model.setCircle(myCity);
-        myCity.setMap(self.model.get('map'));
+        myCity.setMap(self.model.get('map'));*/
       }
-      console.log(self.model.toJSON());
-      
-      _.each(this.collection.nearByTrucks.toJSON(), function(value){
-
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(value.location.latitude, value.location.longitude),
-          //map: self.model.get('map'),
-          title: value.applicant,
-          icon:'images/foodtruck.png'
-        });
-
-        google.maps.event.addListener(marker, 'click', function() {
-          var infowindow = new google.maps.InfoWindow({
-            content: value.applicant + '<br>' + value.fooditems + '<br>' + value.locationdescription
-          }).open(self.model.get('map'),marker);
-        });
-        markers.push(marker);
-      });
-      self.model.setMarkers(markers);
-      self.setAllMap();
+      self.markTrucksOnMap(self.collection.nearByTrucks.toJSON());
       var text = 'Near by food trucks in a ' + $('#user-distance').val() + ' radius';
       $('#filtered-results').text(text);
+      $('#spinner').addClass('hidden');
       //$('#user-distance').val("1");
     },
 
@@ -469,6 +297,10 @@ $( document ).ready(function() {
       var lat = event.latLng.lat();
       var lng = event.latLng.lng();
       self.model.setNewLocation(lat, lng);
+      
+      // Remove olds markers
+      self.clearAllMarkers();        
+      self.model.setMarkers([]);
       
       var circle = self.model.get('circle');
       if (circle) {
@@ -488,7 +320,53 @@ $( document ).ready(function() {
       });
       self.model.setCenter(marker);
       marker.setMap(self.model.get('map'));
+      
+      self.setMapCircle(lat, lng);
 
+      /*var myCity = new google.maps.Circle({
+        center: new google.maps.LatLng(lat, lng),
+        radius: parseFloat($('#user-distance').val()) * 1609,
+        strokeColor:"#0000FF",
+        strokeOpacity:0.8,
+        strokeWeight:2,
+        fillColor:"#0000FF",
+        fillOpacity:0.4
+      });
+      self.model.setCircle(myCity);
+      myCity.setMap(self.model.get('map'));*/
+      self.collection.getNearByTrucks($('#user-distance').val(), lat, lng);
+    },
+    
+    /**
+     * FUnction to set all markers on the map
+     */
+    markTrucksOnMap: function(foodTrucks) {
+      var markers = [];
+      var self = this;
+      _.each(foodTrucks, function(value){
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(value.location.latitude, value.location.longitude),
+          title: value.applicant,
+          icon:'images/foodtruck.png'
+        });
+        markers.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+          var infowindow = new google.maps.InfoWindow({
+            content: value.applicant + '<br>' + value.fooditems + '<br>' + value.locationdescription
+          }).open(self.model.get('map'), marker);
+        });
+      });
+      self.model.setMarkers(markers);
+      self.setAllMap();
+    },
+    
+    /**
+     * Function to create a circle around the central marker and set it on the map
+     */
+    setMapCircle: function(lat, lng) {
+      console.log('set map circle');
+      var self = this;
       var myCity = new google.maps.Circle({
         center: new google.maps.LatLng(lat, lng),
         radius: parseFloat($('#user-distance').val()) * 1609,
@@ -500,10 +378,6 @@ $( document ).ready(function() {
       });
       self.model.setCircle(myCity);
       myCity.setMap(self.model.get('map'));
-     // google.maps.event.addListener(self.model.get('map'), 'click', this.getCoOrds);
-      
-      //$('#user-distance').val('1');
-      self.collection.getNearByTrucks($('#user-distance').val(), lat, lng);
     }
   })
 

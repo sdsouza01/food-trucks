@@ -15,6 +15,18 @@
     padding : 0px;
 }
 
+.loading-bg 
+{
+    padding: 25px;
+    background: url(/food-trucks/images/ajax-loader.gif) no-repeat center;
+    background-size: 120px 20px;
+}
+
+.hidden
+{
+    display: none;
+}
+
 .header
 {
     font-weight: bold;
