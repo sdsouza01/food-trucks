@@ -1,24 +1,15 @@
 $( document ).ready(function() {
-  
+  // Creating the application namespace
   window.app = window.app || { };
   
 
   window.app.foodTruckCollection = Backbone.Collection.extend({
-
-    // Collection to hold the list of near by food trucks
-    nearByTrucks: new Backbone.Collection(),
+    // Collection to hold the list of relevant food trucks
+    foodTrucks: new Backbone.Collection(),
 
     // Collection to hold the list of street names
     streetsList: new Backbone.Collection(),
 
-    // Collection to hold the list of food trucks on the selected street
-    streetTrucks: new Backbone.Collection(),
-    
-    // Collection to hold the list of food trucks based on the selected food type
-    trucksByFood: new Backbone.Collection(),
-    
-    // Collection to hold the list of food trucks names based on the letters the user typed
-    trucksForAutoComplete: new Backbone.Collection(),
 
     initialize: function() {
       console.log('Collection Initialized');
@@ -40,8 +31,7 @@ $( document ).ready(function() {
         }
       })
         .done(function(data){
-          self.nearByTrucks.reset(data);
-          //self.set('near_by_trucks', data);
+          self.foodTrucks.reset(data);
           self.trigger('loadedNearByFoodTrucks');
         });
     },
@@ -74,7 +64,7 @@ $( document ).ready(function() {
         data: {text: $("#user-selection").val()}
       })
       .done(function(data){
-        self.streetTrucks.reset(data);
+        self.foodTrucks.reset(data);
         self.trigger('updatedResults');
       });
     },
@@ -91,39 +81,9 @@ $( document ).ready(function() {
         data: {'food_type' : $('#user-food-type').val()}
       })
       .done(function(data) {
-        self.trucksByFood.reset($.parseJSON(data));
+        self.foodTrucks.reset($.parseJSON(data));
         self.trigger('loadedFoodTrucksByType');
       });
-    },
-    
-    getListOfFoodTruckNamesForAutocomplete: function() {
-      var self = this;
-      var results = $.ajax({
-        type: 'GET',
-        url: 'ajax_requests/food_truck_name_autocomplete.php',
-        data: {'text': $('#search-by-name').val()},
-        datatype: 'json'
-      }).done(function(data) {
-        self.trucksForAutoComplete.reset(data);
-        self.trigger('displayAutoComplete');
-        //return self.trucksForAutoComplete;
-      });
-      
-      $.when(results).done(function(){
-        return;
-      });
-    },
-    
-    getListOfFoodTrucksByName: function() {
-      $.ajax({
-        type: 'GET',
-        url: 'ajax_requests/get_food_truck_by_name.php?truck_name=' + values,
-        datatype: 'json',
-        data: {'truck_name': values}
-      }).done(function(data) {
-      });
-    }
-    
+    }    
   });
-
 });
