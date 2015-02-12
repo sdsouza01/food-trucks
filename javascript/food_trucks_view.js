@@ -62,7 +62,9 @@ $( document ).ready(function() {
       self.collection.getFoodTrucksOnStreet();
     },
     
-    // Sets the map on all markers in the array.
+    /**
+     * Sets the map on all markers in the array.
+     */
     setAllMap: function () {
       var self = this;
       var markers = self.model.get('markers');
@@ -71,6 +73,9 @@ $( document ).ready(function() {
       }
     },
     
+    /**
+     * Clears all amrker on the map
+     */
     clearAllMarkers: function () {
       var self = this;
       var markers = self.model.get('markers');
@@ -79,6 +84,9 @@ $( document ).ready(function() {
       }
     },
     
+    /**
+     * Function to get the users current location using geo location
+     */
     useYourLocation: function() {
       var self = this, lat, lng;
       if ($('#use-your-location').prop('checked')) {
@@ -122,17 +130,26 @@ $( document ).ready(function() {
       }
     },
 
+    /**
+     * Function to get the near by trucks when the users search distabce increases
+     */
     userDistanceUpdate: function() {
       $('#spinner').removeClass('hidden');
       var self = this;
       this.collection.getNearByTrucks($('#user-distance').val(), self.model.get('latitude'), self.model.get('longitude'));
     },
 
+    /**
+     * Function to get the food trucks when the user searched by a food type
+     */
     filterTrucksByFood: function() {
       $('#spinner').removeClass('hidden');
       this.collection.getFoodTrucksByFood();
     },
     
+    /**
+     * Function to display the food trucks when the collection is repopulated with filtered info
+     */
     displayTrucksByFood: function() {
       var self = this;
       self.clearAllMarkers();        
@@ -144,6 +161,9 @@ $( document ).ready(function() {
       $('#spinner').addClass('hidden');
     },
     
+    /**
+     * Function to display the food trucks names when the user starts typing in the input search box
+     */
     autocomplete: function() {
       var self = this;
       if ($('#search-by-name').val().length > 1) {
@@ -191,11 +211,17 @@ $( document ).ready(function() {
       }
     },
 
+    /**
+     * Function to update the results when the user selects a street
+     */
     updateResults: function() {
       $('#spinner').removeClass('hidden');
       this.collection.updateResults();
     },
 
+    /**
+     * Function to display the food trucks on the screen when the collection is populated with new filtered info
+     */
     displayUpdatedResults: function() {
       var self = this;      
       self.clearAllMarkers();        
@@ -208,12 +234,18 @@ $( document ).ready(function() {
       $('#spinner').addClass('hidden');
     },
 
+    /**
+     * Function to render the handlebars template to display the list of streets when the streets information has been received
+     */
     displayStreetsList: function() {
       var self = this;
       var template = Handlebars.compile(streetList);
       $("#user-preference").html(template({locations : self.collection.streetsList.toJSON()}));
     },
 
+    /**
+     * Function to display markers on scrren when a users location is updated
+     */
     displayNearByFoodTrucks: function() {
       var self = this;
       self.clearAllMarkers();        
@@ -231,6 +263,9 @@ $( document ).ready(function() {
       $('#spinner').addClass('hidden');
     },
 
+    /**
+     * Function to get the users new coordinates when he/she clicks on a new location on the map
+     */
     getCoOrds: function(event) {
       var self = view;
       var lat = event.latLng.lat();
@@ -264,7 +299,7 @@ $( document ).ready(function() {
     },
     
     /**
-     * FUnction to set all markers on the map
+     * Function to set all markers on the map
      */
     markTrucksOnMap: function(foodTrucks) {
       var markers = [];
@@ -306,6 +341,7 @@ $( document ).ready(function() {
     }
   })
 
+  // Loading the backbone view with a location at the center of San Francisco
   var mapProp = {
     center: new google.maps.LatLng(37.7833,-122.4167),
     zoom: 14,
@@ -313,6 +349,7 @@ $( document ).ready(function() {
   };
   var mapValue = new google.maps.Map(document.getElementById('googleMap'), mapProp);
 
+  // Populating the model info and setting it on the view
   var map = new window.app.foodTruckMap({
     latitude: 37.7833,
     longitude: -122.4167,

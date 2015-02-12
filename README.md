@@ -17,4 +17,4 @@ You can also search by typing in a food truck name. Auto complete starts after t
 It also allows the user to use his location(Will work only if located in San Francisco)
 
 The site is hosted on Heroku -> https://shrouded-temple-3292.herokuapp.com/food_trucks.php
-It is also accessible on github -> 
+It is also accessible on github -> https://github.com/sdsouza01/food-trucks
