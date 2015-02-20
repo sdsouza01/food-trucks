@@ -48,6 +48,7 @@ $( document ).ready(function() {
      */
     initialize : function () {
       console.log('View Initialized');
+      $('#logo').attr("src", 'images/trucks.png');
       var self = this;
       self.bindListeners();
 

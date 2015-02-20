@@ -20,7 +20,7 @@
         <li id = 'nav-home'><a href = '#' id = 'nav-home-link'>Top</a></li>
         <li id = 'nav-about'><a href = '#about'>About</a></li>
         <li id = 'nav-contact'><a href = '#contact'>Contact Me</a></li>
-        <img src = 'images/trucks.png' class = 'header-img'/>
+        <img id= 'logo' src = 'images/sf-logo.jpg' class = 'header-img'/>
       </ul>
     </div>
     <br><br><br><br><br><br>
