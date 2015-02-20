@@ -14,8 +14,8 @@ $( document ).ready(function() {
                     {{/each}} \
                     </select>';
 
-  var foodTruckView = Backbone.View.extend({
-    el :  '#food-trucks',
+  window.app.foodTruckView = Backbone.View.extend({
+    el :  '#info',
 
     collection : new window.app.foodTruckCollection(),
 
@@ -267,7 +267,7 @@ $( document ).ready(function() {
      * Function to get the users new coordinates when he/she clicks on a new location on the map
      */
     getCoOrds: function(event) {
-      var self = view;
+      var self = window.app.view;
       var lat = event.latLng.lat();
       var lng = event.latLng.lng();
       self.model.setNewLocation(lat, lng);
@@ -339,24 +339,5 @@ $( document ).ready(function() {
       self.model.setCircle(myCity);
       myCity.setMap(self.model.get('map'));
     }
-  })
-
-  // Loading the backbone view with a location at the center of San Francisco
-  var mapProp = {
-    center: new google.maps.LatLng(37.7833,-122.4167),
-    zoom: 14,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var mapValue = new google.maps.Map(document.getElementById('googleMap'), mapProp);
-
-  // Populating the model info and setting it on the view
-  var map = new window.app.foodTruckMap({
-    latitude: 37.7833,
-    longitude: -122.4167,
-    map: mapValue,
-    markers: []
-  });
-  var view = new foodTruckView({
-    model : map
   });
 });
